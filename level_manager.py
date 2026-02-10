@@ -64,7 +64,25 @@ async def handler(websocket):
         async for message in websocket:
             print(f"Command received: {message}")
 
-            # Send command to AI (GET_LEVEL or LEVEL_UP)
+            # --- NEW: Handle Reset Logic ---
+            if message == "RESET_LEVEL":
+                print("RESET command received. Creating fresh game thread...")
+                
+                # 1. Create a brand new thread (This resets the AI memory to start)
+                new_thread = await client.create_thread(assistant_id)
+                current_thread_id = new_thread.thread_id
+                
+                # 2. Overwrite the save file
+                save_thread(current_thread_id)
+                
+                # 3. Send "1" back to Unity immediately
+                await websocket.send("1")
+                await websocket.send("[END]")
+                
+                print("Game reset to Level 1.")
+                continue # Skip the normal LLM processing for this loop
+
+            # --- Normal Logic (GET_LEVEL / LEVEL_UP) ---
             response_stream = await client.add_message(
                 thread_id=current_thread_id,
                 content=message,
