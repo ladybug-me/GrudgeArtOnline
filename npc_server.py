@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify
 from backboard import BackboardClient
 
 app = Flask(__name__)
-client = BackboardClient(api_key="espr_YsCULqYQ1ofjcbhq-5j6JehsnHVytmvS2mKxomVWwGc")
+client = BackboardClient(api_key=<key>)
 
 assistant_id = None
 thread_id = None
