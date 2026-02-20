@@ -6,7 +6,7 @@ from backboard import BackboardClient
 
 app = Flask(__name__)
 
-API_KEY = "espr_YsCULqYQ1ofjcbhq-5j6JehsnHVytmvS2mKxomVWwGc"
+API_KEY = <key>
 
 async def generate_story():
     client = BackboardClient(api_key=API_KEY)
